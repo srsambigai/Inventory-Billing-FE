@@ -11,8 +11,8 @@
 /coverage
 
 # production
-/build
-/.vscode
+build
+.vscode
 
 # misc
 .DS_Store
