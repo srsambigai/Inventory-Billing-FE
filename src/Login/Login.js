@@ -31,6 +31,7 @@ import Entry from './Entry';
 import AuthContext from '../context/AuthProvider';
 import CreateUser from './CreateUser';
 import '../MainPage/MainPage.css';
+import './login.css';
 
 const Login = () => {
     const [message, setMessage] = useState('');
@@ -43,7 +44,7 @@ const Login = () => {
 
     return (
       <div> 
-         <div className='user-container'>
+         <div className='container'>
            <div className='form-container'>
                     <Formik
                         initialValues={{
@@ -60,12 +61,12 @@ const Login = () => {
                             return errors;
                           }}
                         onSubmit={async (values) => {
-                            console.log("onsubmit",values);
+                          //  console.log("onsubmit",values);
                             signinData=await getUser(values);
                           
                           
                           if(signinData.data.message==="User signed-in successfully."){
-                            console.log("data",signinData);
+                          //  console.log("data",signinData);
                             
                            const accessToken = signinData.data.token;
                             const roles = signinData.data.data;
@@ -74,20 +75,20 @@ const Login = () => {
                             setAuth({email,password, roles, accessToken });
                             localStorage.setItem('accessToken', accessToken);
                             
-                            console.log("Signed in");
+                         //   console.log("Signed in");
                             setUser(true);
                             setMessage("Signed in");
                             }
                            else{
                             setUser(false);
-                            console.log("Invalid Credentials");
+                          //  console.log("Invalid Credentials");
                            }
                           }} 
                        >
                        
                         {user===true ? ( <div> <Entry /> </div> ) : (<div>
-                          <h1>Inventory App Login</h1> 
-                        <Form className='form'>
+                          <h2>Inventory Billing App</h2> 
+                        <Form className='form-group'>
                         
                             <div> 
                                 <label>User Name: </label>
@@ -95,16 +96,17 @@ const Login = () => {
                                 <ErrorMessage name="email" component="div" />
                             </div>
                             <div>
-                                <label>Password: </label>
+                                <label>  Password  :  </label>
                                 <Field type='password' name='password'  placeholder='Enter Password' />
                                 <ErrorMessage name="password" component="div" />
                             </div>
                             <div>
-                                <button type="submit">Login</button>
-                                <a role="button" href="/CreateUser"> Create new account </a>
-                                <a role="button" href="/ForgotPassword"> Forgot Password </a>
+                                <button type="submit" className='btn'>Login</button>
+                                <a role="button" className='links' href="/CreateUser"> Create new account </a>
+                                <a role="button" className='links' href="/ForgotPassword"> Forgot Password </a>
                                 </div>
-                        </Form> </div>)}
+                        </Form> 
+                        </div>)}
                     </Formik>
                 </div>
                

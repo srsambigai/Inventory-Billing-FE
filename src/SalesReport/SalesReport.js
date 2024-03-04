@@ -5,7 +5,7 @@ import { getSalesReport} from './salesService';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AuthContext from '../context/AuthProvider';
-
+import '../ProductManagement/products.css';
 const StockTracking = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,11 +21,11 @@ const StockTracking = () => {
   const gettingSalesReport = async () => {
     try{
        // const salesReport  = await getSalesReport('2024-02-12T23:17:05.269Z');
-       console.log("message",message);
+     //  console.log("message",message);
        const token=value.auth.accessToken;
-       console.log("Selected Date",selectedDate);
+     //  console.log("Selected Date",selectedDate);
        const salesReport  = await getSalesReport(selectedDate,token);
-        console.log('Sales Report:', salesReport);
+     //   console.log('Sales Report:', salesReport);
         if(salesReport){
         setData(salesReport.data); // Assuming response.data is an array of records
          // setLoading(false);
@@ -38,10 +38,10 @@ const StockTracking = () => {
 }
 function getTotalSales(){
     try{
-        console.log("TotalSales",totalSales);
+       // console.log("TotalSales",totalSales);
         data.forEach(item=>{
             totalSales=totalSales+item.totalprice;
-            console.log("Total Sales",totalSales);
+         //   console.log("Total Sales",totalSales);
         })
         return totalSales;
     }catch(error){
@@ -59,7 +59,7 @@ const formatDate = (date) => {
     return new Date(str);
   };
 return(
-        <div>
+        <div className='productcontainer'>
             <h2>Sales Report</h2> 
             <div>
            Select Date: <DatePicker
@@ -71,12 +71,12 @@ return(
         customInput={<input />} // Use a custom input field
         value={formatDate(selectedDate)} // Convert selected date to desired format
         parseDate={parseDate} // Parse the input value back to a Date object
-      />
+      /> <br/> <br/>
       <div>
         Selected Date: {selectedDate ? selectedDate.toLocaleDateString() : 'No date selected'}
-      </div> </div> <div>
+      </div> <br/> <br/> </div> <div>
       {message ? ( <p>{message}</p> ) :( <div>
-        <table align='center' border='1' cellPadding='10'>
+        <table align='center' className='inventory-table'>
           <thead>
             <tr>
               <th>Invoice number</th>
@@ -93,7 +93,7 @@ return(
               ))}
           </tbody>
         </table>
-      
+      <hr /><br/> <br/>
     <div><center>Total Sales of Selected Date:{getTotalSales()} </center></div> </div>)} </div>
 
         </div>

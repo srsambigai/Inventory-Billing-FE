@@ -3,12 +3,13 @@ import { useFormik, Formik, Form, Field ,ErrorMessage} from 'formik';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import Login from './Login';
 import { addUser } from './userService';
+import './login.css';
 const CreateUser= () => {
     const [message, setMessage] = useState('');
     return(
         <div>
-           <h3>Create User</h3>
-           <div className='form-container'> 
+           <div className='container'>  <h2>Create User</h2>
+
            {message && <p> {message} </p>}
            <Formik
                         initialValues={{
@@ -50,45 +51,45 @@ const CreateUser= () => {
                             values.address="";
                         }}
  >
-                        <Form className='form'>
-                            <div>
+                        <Form className='form-group'>
+                            <div className="innercontainer">
                                 <label>User Name: </label>
                                 <Field type='text' name='name' placeholder='Enter User Name' /> 
-                              
-                            </div>
-                            <div>
+                                </div>
+                             <div className="innercontainer"> 
                                 <label>Email: </label>
-                                <Field type='text' name='email'  placeholder='Enter Email' />
+                                <Field type='text' name='email' placeholder='Enter Email' />
                                 <ErrorMessage name="productname" component="div" />
                             </div>
-                            <div>
+                            <div className="innercontainer">
                                 <label>Mobile Number: </label>
                                 <Field type='text' name='mobileNumber' placeholder='Enter Mobile Number'  />
                                 <ErrorMessage name="mobileNumber" component="div" />
                             </div>
-                            <div>
+                            <div className="innercontainer">
                                 <label>Password: </label>
                                 <Field type='text' name='password' placeholder='Enter Password'  />
                                 <ErrorMessage name="password" component="div" />
                             </div>
-                            <div>
-                                <label>Role (Admin -1,Privileged User -2): </label>
+                            <div className="innercontainer">
+                                <label>Role(Admin-1,User-2): </label>
                                 <Field type='text' name='role' placeholder='Enter Role' />
                                 <ErrorMessage name="role" component="div" />
                             </div>
-                            <div>
+                            <div className="innercontainer">
                                 <label>Address: </label>
                                 <Field type='text' name='address' placeholder='Enter Address'  />
                                 <ErrorMessage name="Address" component="div" />
                             </div>
                             <div>
                                 
-                                <button type="submit">Register</button> 
+                                <button type="submit" className='btn'>Register</button> 
+                                <a role="button" className="links" href="/"> Signin </a>
                                 </div>
                         </Form>
                     </Formik>
            </div>
-            <a role="button" href="/"> Signin </a>
+           
         </div>
     )
 }

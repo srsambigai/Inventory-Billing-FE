@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import '../MainPage/MainPage.css';
 import { getProducts,updateProduct,deleteProduct } from './productService';
 import AuthContext from '../context/AuthProvider';
-
+import './products.css'
 const ProductManagement = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +26,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
     try{
       const token=value.auth.accessToken;
         const allProducts  = await getProducts(token);
-        console.log('Products:', allProducts);
+       // console.log('Products:', allProducts);
         if(allProducts){
         setData(allProducts.data); // Assuming response.data is an array of records
         // setLoading(false);
@@ -55,7 +55,7 @@ const updatingProduct = (productId) => {
             const token=value.auth.accessToken;
             const response  = updateProduct(productId,item,token);
             setMessage1(`Product ${productId} has been updated`)
-            console.log('Updating Product Response: ', response)
+           // console.log('Updating Product Response: ', response)
           }
         });
       }
@@ -69,19 +69,19 @@ const updatingProduct = (productId) => {
           const token=value.auth.accessToken;
             const response  = await deleteProduct(productId,token);
             setMessage1(`Product ${productId} has been Deleted`)
-            console.log('Deleting Product Response:', response);
+          //  console.log('Deleting Product Response:', response);
             gettingAllProducts();
         }catch(error){
             console.log('Error while deleting Product');
         }
     }
   return(
-        <div>
-            <h2>ProductList</h2> 
+        <div className='productcontainer'>
+            <h2>Product List</h2> 
             <div>
             {message1 && <p> {message1} </p>}
             {message ? ( <p>{message}</p> ) :(
-        <table align='center' border='1' cellPadding='10'>
+        <table align='center' className='inventory-table'>
           <thead>
             <tr>
               <th>Product ID</th>
@@ -104,23 +104,23 @@ const updatingProduct = (productId) => {
                <td> <input type="text" value={item.productdescription} onChange={(e) => handleProductChange({productdescription:e.target.value},item.productid)}/> </td>
                <td> <input type="text" value={item.quantity} onChange={(e) => handleProductChange({quantity:e.target.value},item.productid)}/></td>
                <td> <input type="text" value={item.unitprice} onChange={(e) => handleProductChange({unitprice:e.target.value},item.productid)}/></td>
-                <td><button onClick={() => updatingProduct(item.productid)}>Update</button></td>
-                <td><button onClick={() => deletingProduct(item.productid)}>Delete</button></td>
+                <td><button className="productbtn" onClick={() => updatingProduct(item.productid)}>Update</button></td>
+                <td><button className="productbtn" onClick={() => deletingProduct(item.productid)}>Delete</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
     </div>
-        <nav className='nav'>
+        <nav className='nav1'>
           <ul>
           <li>
-             <Link to="/AddProducts" className='link'>Add Products</Link>
+             <Link to="/AddProducts" className='link1'>Add Products</Link>
              {data.length > itemsPerPage && ( 
-              <ul className="link">
+              <ul className="link1">
               {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
                 <li key={index}>
-                  <button onClick={() => paginate(index + 1)}>{index + 1}</button>
+                  <button className='productbtn' onClick={() => paginate(index + 1)}>{index + 1}</button>
                 </li>
               ))} </ul>
              )}

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import '../MainPage/MainPage.css';
 import { getStocks } from './stockService';
 import AuthContext from '../context/AuthProvider';
-
+import '../ProductManagement/products.css';
 const StockTracking = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
     try{
       const token=value.auth.accessToken;
         const allStocks  = await getStocks(token);
-        console.log('Stocks:', allStocks);
+     //   console.log('Stocks:', allStocks);
         if(allStocks){
         setData(allStocks.data); // Assuming response.data is an array of records
         // setLoading(false);
@@ -37,11 +37,11 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
     }
 }
    return(
-        <div>
+        <div className='productcontainer'>
             <h2>Stock List</h2> 
             <div>
             {message ? ( <p>{message}</p> ) :( <div>
-        <table align='center' border='1' cellPadding='10'>
+        <table align='center' className='inventory-table'>
           <thead>
             <tr>
               <th>Product ID</th>
@@ -52,9 +52,6 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
             </tr>
           </thead>
           <tbody>
-            {/* {currentItems.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}*/}
             {currentItems.map(item => (
               <tr key={item.productid}>
                 <td>{item.productid}</td> 
@@ -66,7 +63,20 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
             ))}
           </tbody>
         </table>
-     </div> )}
+     </div> )} <nav className='nav1'>
+          <ul>
+          <li>
+             {data.length > itemsPerPage && ( 
+              <ul className="link1">
+              {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
+                <li key={index}>
+                  <button className='productbtn' onClick={() => paginate(index + 1)}>{index + 1}</button>
+                </li>
+              ))} </ul>
+             )}
+            </li>
+            </ul>
+            </nav>
     </div>
         </div>
     )

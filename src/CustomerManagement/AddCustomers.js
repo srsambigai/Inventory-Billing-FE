@@ -5,19 +5,17 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import React,{useState,useEffect,useContext} from 'react';
 import AuthContext from '../context/AuthProvider';
 import { all } from 'axios';
+import '../ProductManagement/products.css';
 const AddCustomers = () => {
     const [message, setMessage] = useState('');
     const [cId,setcId]=useState(100);
     const value = useContext(AuthContext);
     
     useEffect(() => {
-        console.log("effective");
-        
         gettingHighestId()
       .then(result => {
        setcId(result);
-       console.log("useeffect result",cId);
-      })
+       })
       }, [cId]);
  
      
@@ -26,18 +24,18 @@ const AddCustomers = () => {
           const token=value.auth.accessToken;
           const allCustomers  = await getCustomers(token);
           let c=100;
-          console.log("All Customers",allCustomers.data.length);
+          //console.log("All Customers",allCustomers.data.length);
           if(allCustomers.data.length > 0) {
-            console.log("Searchin...");
+           // console.log("Searchin...");
           const maxCustomerId= allCustomers.data.map(item=> {
-            console.log("item",item.customerid);
+          //  console.log("item",item.customerid);
            return(item.customerid);
            });
-           console.log("maxCustomerId",maxCustomerId);
+          // console.log("maxCustomerId",maxCustomerId);
          let highestcustomerId = Math.max(...maxCustomerId);
-            console.log("highest",highestcustomerId);
+          //  console.log("highest",highestcustomerId);
            c=highestcustomerId+1;
-           console.log("getting method result",c);
+          // console.log("getting method result",c);
            return c;
            }
 
@@ -51,9 +49,9 @@ const AddCustomers = () => {
     
  
     return (
-        <div className='customer-container'>
-                <h1>Customer Details</h1> 
-                {value.auth.roles===2 ? (<div> <h2> Not an admin user to add customer</h2> </div> ): (<div>
+        <div className='addproductcontainer'>
+                <h2>Customer Details</h2> 
+                {value.auth.roles===2 ? (<div> <h3> Not an admin user to add customer</h3> </div> ): (<div>
                 {message && <p>{message}</p>}
                 
                 
@@ -82,10 +80,10 @@ const AddCustomers = () => {
                             return errors;
                           }}
                         onSubmit={async (values) => {
-                            console.log("cId",cId);
-                            console.log(" Befor Values",values);
+                           // console.log("cId",cId);
+                           // console.log(" Befor Values",values);
                             values.customerid=cId;
-                            console.log("After Values",values);
+                           // console.log("After Values",values);
                             const token=value.auth.accessToken;
                             await addCustomers(values,token);
                             
@@ -98,7 +96,7 @@ const AddCustomers = () => {
                             values.address="";
                             }}
                           >
-                        <Form className='form'>
+                        <Form className='form-group'>
                             <div>
                                 <label>Customer Id: </label>
                                 <Field type='text' name='customerid' value={cId} disabled={true} /> 
@@ -126,22 +124,22 @@ const AddCustomers = () => {
                             </div>
                             <div>
                                 <label>Address: </label>
-                                <Field type='text' name='address' placeholder='Enter Phone number' />
+                                <Field type='text' name='address' placeholder='Enter Address' />
                                 <ErrorMessage name="address" component="div" />
                             </div>
                             <div>
                                 
-                                <button type="submit">Add Customer</button></div>
+                                <button type="submit" className='productbtn'>Add Customer</button></div>
                         </Form>
                     </Formik>
                 </div> </div>)}
 
 <div>
-                                <nav className='nav'>
+                                <nav className='nav1'>
           <ul>
           <li>
           
-              <Link to="/CustomerManagement" className='link'>Customer List</Link>
+              <Link to="/CustomerManagement" className='link1'>Customer List</Link>
             </li>
             </ul>
             </nav>

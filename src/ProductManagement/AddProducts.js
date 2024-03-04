@@ -13,18 +13,19 @@ import { addProducts,getProducts} from './productService';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import React,{useState,useEffect,useContext} from 'react';
 import AuthContext from '../context/AuthProvider';
+import './products.css'
 import { all } from 'axios';
 const AddProducts = () => {
     const [message, setMessage] = useState('');
     const [pId,setpId]=useState(100);
     const value = useContext(AuthContext);
     useEffect(() => {
-        console.log("effective");
+       // console.log("effective");
         
         gettingHighestId()
       .then(result => {
        setpId(result);
-       console.log("useeffect result",pId);
+     //  console.log("useeffect result",pId);
       })
       }, [pId]);
  
@@ -34,18 +35,18 @@ const AddProducts = () => {
           const token=value.auth.accessToken;
           const allProducts  = await getProducts(token);
           let c=100;
-          console.log("All Products",allProducts.data.length);
+         // console.log("All Products",allProducts.data.length);
           if(allProducts.data.length > 0) {
-            console.log("Searchin...");
+         //   console.log("Searchin...");
           const maxProductId= allProducts.data.map(item=> {
-            console.log("item",item.productid);
+         //   console.log("item",item.productid);
            return(item.productid);
            });
-           console.log("maxProductId",maxProductId);
+         //  console.log("maxProductId",maxProductId);
          let highestproductId = Math.max(...maxProductId);
-            console.log("highest",highestproductId);
+        //    console.log("highest",highestproductId);
            c=highestproductId+1;
-           console.log("getting method result",c);
+         //  console.log("getting method result",c);
            return c;
            }
 
@@ -59,9 +60,9 @@ const AddProducts = () => {
     
  
     return (
-        <div className='product-container'>
-                <h1>Product Details</h1> 
-                {value.auth.roles===2 ? (<div> <h2> Not an admin to Add Products</h2> </div> ): (<div>   
+        <div className='addproductcontainer'>
+                <h2>Product Details</h2> 
+                {value.auth.roles===2 ? (<div> <h3> Not an admin to Add Products</h3> </div> ): (<div>   
                 {message && <p>{message}</p>}
               
                 
@@ -87,10 +88,10 @@ const AddProducts = () => {
                             return errors;
                           }}
                         onSubmit={async (values) => {
-                            console.log("pId",pId);
-                            console.log(" Befor Values",values);
+                        //    console.log("pId",pId);
+                        //    console.log(" Befor Values",values);
                             values.productid=pId;
-                            console.log("After Values",values);
+                        //    console.log("After Values",values);
                             const token=value.auth.accessToken;
                             await addProducts(values,token);
                             
@@ -105,7 +106,7 @@ const AddProducts = () => {
 
                        
                     >
-                        <Form className='form'>
+                        <Form className='form-group'>
                             <div>
                                 <label>Product Id: </label>
                                 <Field type='text' name='productid' value={pId} disabled={true} /> 
@@ -133,7 +134,7 @@ const AddProducts = () => {
                             </div>
                             <div>
                                 
-                                <button type="submit">Add Products</button> 
+                                <button type="submit" className='productbtn'>Add Products</button> 
                                 </div>
                         </Form>
                     </Formik>
@@ -142,11 +143,11 @@ const AddProducts = () => {
 }
 
 <div>
-                                <nav className='nav'>
+                                <nav className='nav1'>
           <ul>
           <li>
           
-              <Link to="/ProductManagement" className='link'>Product List</Link>
+              <Link to="/ProductManagement" className='link1'>Product List</Link>
             </li>
             </ul>
             </nav>

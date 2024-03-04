@@ -14,6 +14,7 @@ import { addBilling} from './billingService';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import React,{useState,useEffect,useContext} from 'react';
 import AuthContext from '../context/AuthProvider';
+import '../ProductManagement/products.css';
 import { all } from 'axios';
 const AddBilling = () => {
     const [message, setMessage] = useState('');
@@ -21,9 +22,9 @@ const AddBilling = () => {
 
  
     return (
-        <div className='billing-container'>
-                <h1>Billing Details</h1> 
-                {value.auth.roles===1 ? (<div> <h2> Not a Privilege user to create Bill</h2> </div> ): (<div>
+        <div className='addproductcontainer'>
+                <h2>Billing Details</h2> 
+                {value.auth.roles===1 ? (<div> <h3> Not a Privilege user to create Bill</h3> </div> ): (<div>
                 {message && <p>{message}</p>}
                 
                 <div className='form-container'>
@@ -63,7 +64,7 @@ const AddBilling = () => {
                             values.quantity="";
                             }}
                           >
-                        <Form className='form'>
+                        <Form className='form-group'>
                             <div>
                                 <label>Customer Id: </label>
                                 <Field type='text' name='customerid' placeholder='Enter Customer Id' /> 
@@ -90,7 +91,7 @@ const AddBilling = () => {
                                 <ErrorMessage name="quantity" component="div" />
                             </div>
                             <div>
-                                 <button type="submit">Create Billing</button>
+                                 <button type="submit" className='productbtn'>Create Billing</button>
                                  </div>
                         </Form>
                     </Formik>
@@ -99,11 +100,11 @@ const AddBilling = () => {
                                  </div>  )
                 }
                 <div>
-                               <nav className='nav'>
+                               <nav className='nav1'>
           <ul>
           <li>
           
-              <Link to="/billing" className='link'>Billing</Link>
+              <Link to="/billing" className='link1'> List Billing</Link>
             </li>
             </ul>
             </nav></div>

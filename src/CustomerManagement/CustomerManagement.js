@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import '../MainPage/MainPage.css';
 import { getCustomers,updateCustomer,deleteCustomer } from './customerService';
 import AuthContext from '../context/AuthProvider';
+import '../ProductManagement/products.css';
 const CustomerManagement = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +27,7 @@ const paginate = pageNumber => setCurrentPage(pageNumber);
     try{
       const token=value.auth.accessToken;
         const allCustomers  = await getCustomers(token);
-        console.log('Customers:', allCustomers);
+       // console.log('Customers:', allCustomers);
         if(allCustomers){
         setData(allCustomers.data); // Assuming response.data is an array of records
        // setLoading(false);
@@ -55,7 +56,7 @@ const updatingCustomer = (customerId) => {
             const token=value.auth.accessToken;
             const response  = updateCustomer(customerId,item,token);
             setMessage1(`Customer ${customerId} has been updated`)
-            console.log('Updating Customer Response: ', response)
+           // console.log('Updating Customer Response: ', response)
           }
         });
       }
@@ -69,19 +70,19 @@ const updatingCustomer = (customerId) => {
           const token=value.auth.accessToken;
             const response  = await deleteCustomer(customerId,token);
             setMessage1(`Customer ${customerId} has been Deleted`)
-            console.log('Deleting customer Response:', response);
+          //  console.log('Deleting customer Response:', response);
             gettingAllCustomers();
         }catch(error){
             console.log('Error while deleting Customer');
         }
     }
   return(
-        <div>
+        <div className='productcontainer'>
             <h2>Customer List</h2> 
             <div>
               {message1 && <p> {message1} </p>}
             {message ? ( <p>{message}</p> ) :(
-        <table align='center' border='1' cellPadding='10'>
+        <table align='center' className='inventory-table'>
           <thead>
             <tr>
               <th>Customer ID</th>
@@ -106,23 +107,23 @@ const updatingCustomer = (customerId) => {
                <td> <input type="text" value={item.email} onChange={(e) => handleProductChange({email:e.target.value},item.customerid)}/></td>
                <td> <input type="text" value={item.phone} onChange={(e) => handleProductChange({phone:e.target.value},item.customerid)}/></td>
                <td> <input type="text" value={item.address} onChange={(e) => handleProductChange({address:e.target.value},item.customerid)}/></td>
-                <td><button onClick={() => updatingCustomer(item.customerid)}>Update</button></td>
-                <td><button onClick={() => deletingCustomer(item.customerid)}>Delete</button></td>
+                <td><button className="productbtn" onClick={() => updatingCustomer(item.customerid)}>Update</button></td>
+                <td><button className="productbtn" onClick={() => deletingCustomer(item.customerid)}>Delete</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
     </div>
-        <nav className='nav'>
+        <nav className='nav1'>
           <ul>
           <li>
-             <Link to="/AddCustomers" className='link'>Add Customers</Link>
+             <Link to="/AddCustomers" className='link1'>Add Customers</Link>
              {data.length > itemsPerPage && ( 
-              <ul className="link">
+              <ul className="link1">
               {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map((_, index) => (
                 <li key={index}>
-                  <button onClick={() => paginate(index + 1)}>{index + 1}</button>
+                  <button className='productbtn' onClick={() => paginate(index + 1)}>{index + 1}</button>
                 </li>
               ))} </ul>
              )}

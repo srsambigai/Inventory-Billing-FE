@@ -13,7 +13,7 @@ import '../MainPage/MainPage.css';
 import { getBilling,updateBilling,deleteBilling } from './billingService';
 import GenerateBill from '../Billing/GenerateBill';
 import AuthContext from '../context/AuthProvider';
-
+import '../ProductManagement/products.css';
 const Billing = () => {
   const [data, setData] = useState([]);
  // const [loading, setLoading] = useState(true);
@@ -89,7 +89,7 @@ const updatingBilling = (billingId) => {
         }
     }
   return(
-        <div>
+        <div className='productcontainer'>
             <h2>Billing</h2>  
             <div>
             <Routes>
@@ -97,7 +97,7 @@ const updatingBilling = (billingId) => {
             </Routes>
             {message1 && <p> {message1} </p>}
             {message ? ( <p>{message}</p> ) :(
-            <table align='center' border='1' cellPadding='10'>
+            <table align='center' className='inventory-table'>
           <thead>
             <tr>
               <th>Customer ID</th>
@@ -124,16 +124,16 @@ const updatingBilling = (billingId) => {
                <td> <input type="text" value={item.productname} onChange={(e) => handleProductChange({productname:e.target.value},item._id)}/></td>
                <td> <input type="text" value={item.quantity} onChange={(e) => handleProductChange({quantity:e.target.value},item._id)}/></td>
                <td> <input type="text" value={item.unitprice} onChange={(e) => handleProductChange({unitprice:e.target.value},item._id)}/></td>
-                <td><button onClick={() => updatingBilling(item._id)}>Update</button></td>
-                <td><button onClick={() => deletingBilling(item._id)}>Delete</button></td>
-                <td><nav className='nav'><ul> <li><Link to={`/generatebill/?data=${encodeURIComponent(JSON.stringify(item))}`} className='link'>View</Link> </li></ul></nav></td>
+                <td><button className='productbtn' onClick={() => updatingBilling(item._id)}>Update</button></td>
+                <td><button className='productbtn' onClick={() => deletingBilling(item._id)}>Delete</button></td>
+                <td><nav className='nav1'><ul> <li><Link to={`/generatebill/?data=${encodeURIComponent(JSON.stringify(item))}`} className='link1'>View</Link> </li></ul></nav></td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
     </div>
-        <nav className='nav'>
+        <nav className='nav1'>
           <ul>
           <li>
              {data.length > itemsPerPage && ( 
@@ -143,7 +143,7 @@ const updatingBilling = (billingId) => {
                   <button onClick={() => paginate(index + 1)}>{index + 1}</button>
                 </li>
               ))} </ul>
-             )} <Link to="/addbilling" className='link'>Add Billing</Link>
+             )} <Link to="/addbilling" className='link1'>Add Billing</Link>
             </li>
             </ul>
             </nav>

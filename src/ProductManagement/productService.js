@@ -9,12 +9,12 @@ export const getProducts = async (token) => {
     //logic to get all products
     // axios.get();
     try{
-        console.log("service start");
+      //  console.log("service start");
         const response = await axios.get(`${BASE_URL}/products`,{
             headers:{
                 Authorization:`Bearer ${token}`
             }});
-        console.log("service end");
+      //  console.log("service end");
         return response.data
     }catch(error){
         console.log('Error: ', error)
@@ -45,13 +45,13 @@ export const addProducts = async (data,token) => {
  export const updateProduct = async (productId, updateData,token) => {
     // logic to update user
     try{
-        console.log("update Product",productId);
-        console.log("token",token);
+      //  console.log("update Product",productId);
+      //  console.log("token",token);
        const response = await axios.put(`${BASE_URL}/updateProducts/${productId}`, updateData,{
         headers:{
             Authorization:`Bearer ${token}`
         }});
-        console.log("response",response);
+      //  console.log("response",response);
         return response;
         }catch(error){
         console.log('Error: ', error)

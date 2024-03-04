@@ -9,12 +9,12 @@ export const getCustomers = async (token) => {
     //logic to get all customers
     // axios.get();
     try{
-        console.log("service start");
+       // console.log("service start");
         const response = await axios.get(`${BASE_URL}/customers`,{
             headers:{
                 Authorization:`Bearer ${token}`
             }});
-        console.log("service end");
+       // console.log("service end");
         return response.data
     }catch(error){
         console.log('Error: ', error)
